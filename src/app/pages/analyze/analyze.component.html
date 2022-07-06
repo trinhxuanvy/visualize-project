@@ -1,0 +1,79 @@
+<button mat-raised-button routerLink="/statistic" class="d-block mx-auto mt-4">
+  Switch
+</button>
+<div
+  class="container-fluid d-flex align-items-center justify-content-center h-100"
+  style="margin-top: 100px"
+>
+  <div class="p-3 bsd bdr8px w-100">
+    <div class="d-flex align-items-center justify-content-end">
+      <div class="me-2">
+        <button
+          mat-raised-button
+          color="warn"
+          [matMenuTriggerFor]="menu"
+          class=""
+        >
+          Category: {{ typeChoseText }}
+        </button>
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            *ngFor="let typeDisplay of catogories"
+            (click)="handleChangeDisplay(typeDisplay.categoryId)"
+          >
+            <span>{{ typeDisplay.categoryName }}</span>
+          </button>
+        </mat-menu>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          [matMenuTriggerFor]="menu1"
+          class=""
+        >
+          Year: {{ yearChose }}
+        </button>
+        <mat-menu #menu1="matMenu">
+          <button
+            mat-menu-item
+            *ngFor="let item of year"
+            (click)="handleChangeYear(item)"
+          >
+            <span>{{ item }}</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="mt-4">
+      <figure id="bar"></figure>
+    </div>
+    <div class="mt-4 d-flex align-items-center justify-content-center">
+      <button mat-button (click)="handleHideShowChart(0)">
+        <div class="d-flex align-items-center">
+          <span class="material-icons"> crop_16_9 </span>
+          Quantity Ordered
+        </div>
+      </button>
+      <div class="d-flex align-items-center ms-3">
+        <span
+          class="material-symbols-outlined"
+          *ngFor="let item of colorList"
+          [style]="{ color: item }"
+        >
+          crop_16_9
+        </span>
+        <span class="ms-2">Avg Rating Star (1->5)</span>
+      </div>
+      <button mat-button class="ms-2" (click)="handleHideShowChart(1)">
+        <div class="d-flex align-items-center">
+          <span class="material-icons" [style]="{ color: colorLines[0] }"
+            >horizontal_rule</span
+          >
+          Avg Price
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

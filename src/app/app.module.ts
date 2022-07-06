@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,9 +14,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 import { StatisticComponent } from './pages/statistic/statistic.component';
+import { AnalyzeComponent } from './pages/analyze/analyze.component';
+import { routing } from './app.routing';
 
 @NgModule({
-  declarations: [AppComponent, StatisticComponent],
+  declarations: [AppComponent, StatisticComponent, AnalyzeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +30,7 @@ import { StatisticComponent } from './pages/statistic/statistic.component';
     MatMenuModule,
     MatIconModule,
     MatTableModule,
+    RouterModule.forRoot(routing),
   ],
   providers: [],
   bootstrap: [AppComponent],
