@@ -564,7 +564,7 @@ export class StatisticComponent implements OnInit {
       totalRec += receivedCal['month_' + i];
       totalDev += deliveredCal['month_' + i];
     });
-    totalOpen = totalDev + totalClose - totalRec;
+    totalOpen = '';
     this.openingInventory = cloneDeep({ ...openStart, year: totalOpen });
     this.received = cloneDeep({ ...receivedCal, year: totalRec });
     this.delivered = cloneDeep({ ...deliveredCal, year: totalDev });
