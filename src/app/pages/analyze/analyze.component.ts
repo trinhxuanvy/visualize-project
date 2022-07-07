@@ -236,7 +236,7 @@ export class AnalyzeComponent implements OnInit {
       this.colorBars[0],
       this.displayChart0,
       0,
-      200
+      1000
     );
     this.drawLines(
       this.svg,
@@ -248,7 +248,7 @@ export class AnalyzeComponent implements OnInit {
       this.colorLines[0],
       this.displayChart1,
       0,
-      10000
+      100
     );
   }
 
@@ -285,7 +285,7 @@ export class AnalyzeComponent implements OnInit {
             sum += o.quantity;
             rating += o.rating;
             count += 1;
-            avgPriveSum += o.price * o.quantity;
+            avgPriveSum += o.price;
           }
         });
         let finalRating = Math.round(rating / count);
@@ -295,7 +295,7 @@ export class AnalyzeComponent implements OnInit {
           color: this.colorList[finalRating - 1],
           rating: finalRating,
         });
-        resutlAvgPrice.push({ type: p.productName, value: avgPriveSum });
+        resutlAvgPrice.push({ type: p.productName, value: avgPriveSum/count });
         console.log(resutlAvgPrice);
         avgPriveSum = 0;
         sum = 0;
