@@ -561,7 +561,7 @@ export class StatisticComponent implements OnInit {
       rec[`month_${i}`] = receivedCal[`month_${i}`];
       dev[`month_${i}`] = deliveredCal[`month_${i}`];
       open[`month_${i}`] = openStart[`month_${i}`];
-      closeCal[`month_${i}`] = closeCal[`month_${i}`];
+      close[`month_${i}`] = closeCal[`month_${i}`];
     });
 
     const rangeRec = this.getMinMaxObj(rec);
@@ -569,14 +569,16 @@ export class StatisticComponent implements OnInit {
     const rangeOpen = this.getMinMaxObj(open);
     const rangeClose = this.getMinMaxObj(close);
 
+    console.log(this.createMaxNumber(
+      Math.max(rangeRec.max, rangeClose.max, rangeDev.max)
+    ))
+
     this.range = {
       min: 0,
       max: this.createMaxNumber(
-        Math.max(rangeRec.max, rangeOpen.max, rangeClose.max, rangeDev.max)
-      ),
+        Math.max(rangeRec.max, rangeClose.max, rangeDev.max)
+      )/10,
     };
-
-    console.log(this.range);
   }
 
   getMinMaxObj(obj: Object) {
@@ -587,8 +589,9 @@ export class StatisticComponent implements OnInit {
   }
 
   createMaxNumber(value: number) {
+    const cvt = value.toString();
     const len = value.toString().length;
-    return this.leftPadWithZeros(1, len);
+    return this.leftPadWithZeros(parseInt(cvt[0]) + 1, len);
   }
 
   leftPadWithZeros(number: number, length: number) {
@@ -596,7 +599,6 @@ export class StatisticComponent implements OnInit {
     while (str.length <= length) {
       str = str + '0';
     }
-    console.log(str);
     return parseInt(str);
   }
 }
