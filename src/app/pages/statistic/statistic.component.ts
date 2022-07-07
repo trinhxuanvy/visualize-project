@@ -432,14 +432,14 @@ export class StatisticComponent implements OnInit {
     }
 
     const a = pa.find(
-      (i: any) => i.type === this.typeChoseKey && i.year === this.yearChose
+      (i: any) => i.type === this.typeChoseKey && i.year === this.yearChose - 1
     );
 
     console.log(a);
     //const getIn = getHistory.fo;
     let openStart: any = {
       name: 'Opening Inventory',
-      month_1: 0,
+      month_1: a?.total || 0,
       month_2: 0,
       month_3: 0,
       month_4: 0,
@@ -570,23 +570,21 @@ export class StatisticComponent implements OnInit {
     this.delivered = cloneDeep({ ...deliveredCal, year: totalDev });
     this.closingInventory = cloneDeep({ ...closeCal, year: totalClose });
 
-    // const openSave = [];
-    // const openIndex = pa.findIndex(
-    //   (i: any) => i.year === this.yearChose && i.type === this.typeChoseKey
-    // );
-    // if (openIndex > -1) {
-    //   console.log('head');
-    //   pa[openIndex].total = closeCal.month_12;
-    //   localStorage.setItem('analyze', JSON.stringify(pa));
-    // } else {
-    //   console.log('geqq');
-    //   pa.push({
-    //     type: this.typeChoseKey,
-    //     year: this.yearChose,
-    //     total: closeCal.month_12,
-    //   });
-    //   localStorage.setItem('analyze', JSON.stringify(pa));
-    // }
+    const openSave = [];
+    const openIndex = pa.findIndex(
+      (i: any) => i.year === this.yearChose && i.type === this.typeChoseKey
+    );
+    if (openIndex > -1) {
+      //pa[openIndex].total = closeCal.month_12;
+      //localStorage.setItem('analyze', JSON.stringify(pa));
+    } else {
+      pa.push({
+        type: this.typeChoseKey,
+        year: this.yearChose,
+        total: closeCal.month_12,
+      });
+      localStorage.setItem('analyze', JSON.stringify(pa));
+    }
 
     const rec: any = {},
       dev: any = {},
