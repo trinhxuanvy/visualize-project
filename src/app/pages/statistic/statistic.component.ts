@@ -116,7 +116,8 @@ export class StatisticComponent implements OnInit {
     color: string,
     display: boolean,
     minY: number,
-    maxY: number
+    maxY: number,
+    nameTooltip: string
   ): void {
     const tooltip = d3
       .select('body')
@@ -163,9 +164,9 @@ export class StatisticComponent implements OnInit {
       .on('mousemove', (e: any, d: any) => {
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
-          .html(`Quantity: <span>${d.value}</span>`)
+          .html(`${nameTooltip}: <span>${d.value}</span>`)
           .style('left', `${e.offsetX}px`)
-          .style('top', `${e.offsetY + 330}px`);
+          .style('top', `${e.offsetY + 460}px`);
       })
       .on('mouseout', () =>
         tooltip.transition().duration(500).style('opacity', 0)
@@ -181,7 +182,8 @@ export class StatisticComponent implements OnInit {
     color: string,
     display: boolean,
     minY: number,
-    maxY: number
+    maxY: number,
+    nameTooltip: string
   ): void {
     const tooltip = d3
       .select('body')
@@ -228,9 +230,9 @@ export class StatisticComponent implements OnInit {
         console.log(g.node());
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
-          .html(`Quantity: <span>${d.value}</span>`)
+          .html(`${nameTooltip}: <span>${d.value}</span>`)
           .style('left', `${e.offsetX}px`)
-          .style('top', `${e.offsetY + 350}px`);
+          .style('top', `${e.offsetY + 460}px`);
       })
       .on('mouseout', () =>
         tooltip.transition().duration(500).style('opacity', 0)
@@ -291,10 +293,10 @@ export class StatisticComponent implements OnInit {
     this.yearChose = this.year[0];
     this.handleAnalyzeData();
     this.handleMergeData();
-    this.createSvg();
     this.handleConvertData(this.dataList[1], 1);
     this.handleConvertData(this.dataList[3], 3);
     this.handleConvertData(this.dataList[2], 2);
+    this.createSvg();
     this.handleAddChart();
   }
 
@@ -309,7 +311,8 @@ export class StatisticComponent implements OnInit {
       this.colorBars[0],
       this.displayChart0,
       this.range.min,
-      this.range.max
+      this.range.max,
+      this.typeChoseText
     );
     this.handleConvertData(this.dataList[1], 1);
     this.drawLines(
@@ -322,7 +325,8 @@ export class StatisticComponent implements OnInit {
       this.colorLines[0],
       this.displayChart1,
       this.range.min,
-      this.range.max
+      this.range.max,
+      this.typeChoseText
     );
     this.handleConvertData(this.dataList[2], 2);
     this.drawLines(
@@ -335,7 +339,8 @@ export class StatisticComponent implements OnInit {
       this.colorLines[1],
       this.displayChart2,
       this.range.min,
-      this.range.max
+      this.range.max,
+      this.typeChoseText
     );
   }
 
@@ -591,13 +596,15 @@ export class StatisticComponent implements OnInit {
       rec[`month_${i}`] = receivedCal[`month_${i}`];
       dev[`month_${i}`] = deliveredCal[`month_${i}`];
       open[`month_${i}`] = openStart[`month_${i}`];
-      closeCal[`month_${i}`] = closeCal[`month_${i}`];
+      close[`month_${i}`] = closeCal[`month_${i}`];
     });
 
     const rangeRec = this.getMinMaxObj(rec);
     const rangeDev = this.getMinMaxObj(dev);
     const rangeOpen = this.getMinMaxObj(open);
     const rangeClose = this.getMinMaxObj(close);
+
+    console.log(rangeClose);
 
     this.range = {
       min: 0,
@@ -608,6 +615,8 @@ export class StatisticComponent implements OnInit {
   }
 
   getMinMaxObj(obj: Object) {
+    console.log(Math.min(...Object.values(obj)), 'min');
+    console.log(Math.max(...Object.values(obj)), 'max');
     return {
       min: Math.min(...Object.values(obj)),
       max: Math.max(...Object.values(obj)),
@@ -617,7 +626,7 @@ export class StatisticComponent implements OnInit {
   createMaxNumber(value: number) {
     const cvt = value.toString();
     const len = value.toString().length;
-    return this.leftPadWithZeros(parseInt(cvt[0]) - 1, len);
+    return Math.round(value * 1.5); //this.leftPadWithZeros(parseInt(cvt[0]), len);
   }
 
   leftPadWithZeros(number: number, length: number) {

@@ -60,7 +60,7 @@ export class AnalyzeComponent implements OnInit {
       .attr('transform', 'rotate(0)')
       .attr('x', this.width - 20)
       .attr('y', -20)
-      .text('Avg Price ($)')
+      .text('Avg Price')
       .style('font-size', '12px');
   }
   private drawBars(
@@ -123,7 +123,7 @@ export class AnalyzeComponent implements OnInit {
         tooltip
           .html(`Quantity Ordered: <span>${d.value}</span>`)
           .style('left', `${e.offsetX}px`)
-          .style('top', `${e.offsetY + 160}px`);
+          .style('top', `${e.offsetY + 220}px`);
       })
       .on('mouseout', () =>
         tooltip.transition().duration(500).style('opacity', 0)
@@ -189,7 +189,7 @@ export class AnalyzeComponent implements OnInit {
         tooltip
           .html(`Avg Price: <span>${d.value}</span>`)
           .style('left', `${e.offsetX}px`)
-          .style('top', `${e.offsetY + 160}px`);
+          .style('top', `${e.offsetY + 220}px`);
       })
       .on('mouseout', () =>
         tooltip.transition().duration(500).style('opacity', 0)
@@ -295,7 +295,10 @@ export class AnalyzeComponent implements OnInit {
           color: this.colorList[finalRating - 1],
           rating: finalRating,
         });
-        resutlAvgPrice.push({ type: p.productName, value: avgPriveSum/count });
+        resutlAvgPrice.push({
+          type: p.productName,
+          value: avgPriveSum / count,
+        });
         console.log(resutlAvgPrice);
         avgPriveSum = 0;
         sum = 0;
