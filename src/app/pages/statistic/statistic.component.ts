@@ -420,6 +420,18 @@ export class StatisticComponent implements OnInit {
   }
 
   handleAnalyzeData() {
+    const getHistory: any = localStorage.getItem('analyze');
+    let pa = [];
+    if (getHistory) {
+      pa = JSON.parse(getHistory);
+    }
+
+    const a = pa.find(
+      (i: any) => i.type === this.typeChoseKey && i.year === this.yearChose
+    );
+
+    console.log(a);
+    //const getIn = getHistory.fo;
     let openStart: any = {
       name: 'Opening Inventory',
       month_1: 0,
@@ -553,6 +565,24 @@ export class StatisticComponent implements OnInit {
     this.delivered = cloneDeep({ ...deliveredCal, year: totalDev });
     this.closingInventory = cloneDeep({ ...closeCal, year: totalClose });
 
+    // const openSave = [];
+    // const openIndex = pa.findIndex(
+    //   (i: any) => i.year === this.yearChose && i.type === this.typeChoseKey
+    // );
+    // if (openIndex > -1) {
+    //   console.log('head');
+    //   pa[openIndex].total = closeCal.month_12;
+    //   localStorage.setItem('analyze', JSON.stringify(pa));
+    // } else {
+    //   console.log('geqq');
+    //   pa.push({
+    //     type: this.typeChoseKey,
+    //     year: this.yearChose,
+    //     total: closeCal.month_12,
+    //   });
+    //   localStorage.setItem('analyze', JSON.stringify(pa));
+    // }
+
     const rec: any = {},
       dev: any = {},
       open: any = {},
@@ -587,7 +617,7 @@ export class StatisticComponent implements OnInit {
   createMaxNumber(value: number) {
     const cvt = value.toString();
     const len = value.toString().length;
-    return this.leftPadWithZeros(parseInt(cvt[0]) + 1, len);
+    return this.leftPadWithZeros(parseInt(cvt[0]) - 1, len);
   }
 
   leftPadWithZeros(number: number, length: number) {
