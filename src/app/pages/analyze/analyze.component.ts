@@ -60,7 +60,7 @@ export class AnalyzeComponent implements OnInit {
       .attr('transform', 'rotate(0)')
       .attr('x', this.width - 20)
       .attr('y', -20)
-      .text('Avg Price')
+      .text('Price')
       .style('font-size', '12px');
   }
   private drawBars(
@@ -187,7 +187,7 @@ export class AnalyzeComponent implements OnInit {
         console.log(g.node());
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
-          .html(`Avg Price: <span>${d.value}</span>`)
+          .html(`Price: <span>${d.value}</span>`)
           .style('left', `${e.offsetX}px`)
           .style('top', `${e.offsetY + 220}px`);
       })
